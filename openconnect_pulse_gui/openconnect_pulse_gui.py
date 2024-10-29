@@ -243,23 +243,8 @@ def parse_args(args=None, prog=None):
     return p, args
 
 
-def do_openconnect(server, authcookie, run_openconnect=True):
-    cmd = [
-        "openconnect",
-        "--protocol",
-        "nc",
-        "-C",
-        '{}={}'.format(authcookie.name, authcookie.value),
-        server,
-    ]
-    if not run_openconnect:
-        print(" ".join(cmd))
-        return None
-    else:
-        proc = subprocess.Popen(cmd)
-        print(proc)
-        ret = proc.wait()
-        return ret
+def print_cookie(server, authcookie):
+    print('{}={}'.format(authcookie.name, authcookie.value))
 
 
 def saml_thread(jobQ, returnQ, closeEvent):
@@ -300,13 +285,9 @@ def main(prog=None):
         log_level = log_levels[args.verbose]
     logging.basicConfig(level=log_level)
 
-    run_openconnect = True
-
-    if os.geteuid() != 0:
-        log.warning(
-            "Running as non-root user. Will not run openconnect, only print the command"
-        )
-        run_openconnect = False
+    if os.geteuid() == 0:
+        log.warning("Running as user root! will not continue!")
+        exit (1)
 
     # Create a thread for GTK handling
     # This allows us to do things in the main python thread (e.g. catch SIGINT)
@@ -334,10 +315,12 @@ def main(prog=None):
                 time.sleep(0.5)
                 continue
 
-            # extract response and convert to OpenConnect command-line
-            exit_code = do_openconnect(
-                args.server, ret["auth_cookie"], run_openconnect=run_openconnect
+            # extract response and print to command-line
+            print_cookie(
+                args.server, ret["auth_cookie"]
             )
+            break
+            
         except KeyboardInterrupt:
             log.warning("User exited")
             Gtk.main_quit()

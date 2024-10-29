@@ -1,6 +1,13 @@
+*Forked from [utknoxville/openconnect-pulse-gui](https://github.com/utknoxville/openconnect-pulse-gui)*.
+
+Status: **WIP**
+
 # openconnect-pulse-gui
 
-This script provides a wrapper around [OpenConnect](https://www.infradead.org/openconnect/) which allows a user to log in through a WebKitGTK2 window.  This allows OpenConnect to be compatible with web-based authentication mechanisms, such as SAML.
+This script provides a browser login through a WebKitGTK2 window. The authentication cookie is printed to the console so that it can be used to call [OpenConnect](https://www.infradead.org/openconnect/) with parameter `--cookie=<AUTH-COOKIE>` afterwards. This allows OpenConnect to be compatible with web-based authentication mechanisms, such as SAML.
+
+In contrast to the original project the browser can run as regular user account. Only `openconnect` has to called with `sudo` as user `root` to be able to add the tunneling network device. If `openconnect` is started with parameter `--setuid=${USER}` it will drop the root privileges to your user account.
+
 
 ## Requirements
 
@@ -12,31 +19,40 @@ The script can be used with python2 or python3, however python3 is recommended. 
 
 Instruction for specific distros can be found below.
 
+
 ### Debian/Ubuntu
 
     sudo apt install python3-gi gir1.2-webkit2-4.0 openconnect
+
 
 ### Fedora
 
     sudo yum install python-gi webkit2gtk3 openconnect
 
+
 ### Arch
 
     sudo pacman -S python-gobject webkit2gtk openconnect
+
 
 ## Installation
 
 This repo can be downloaded with `git clone https://github.com/utknoxville/openconnect-pulse-gui` or via the GitHub webpage.
 
-Installation can be performed using `pip install .` or directly calling `python setup.py install`.
+copy the `openconnect_pulse_gui.py` script to a directory of your liking.
+
 
 ## Usage
+
+
+**TODO**
 
 Once installed, the `openconnect-pulse-gui` script should be in your $PATH.  If not, the script `openconnect_pulse_gui/openconnect_pulse_gui.py` can be called directly.
 
 The only required required argument is the sign-in link / server URL.  Other arguments can be found by using `python openconnect-pulse-gui.py -h`.
 
 Note that this script will not run openconnect, it will only print the command with the correct arguments to stdout.
+
 
 ## Login process
 
