@@ -81,6 +81,7 @@ You can use the wrapper script `wrapper-script/vpn-wrapper-script` for convenien
   - enter `VPN_USER` if you connect with another user name then your Linux account.
   - enter `VPN_URL` for your VPN connection,
   - set the full path for `PULSE_GUI_SCRIPT`.
+- Make the file executable, e.g. `chmod 750 <your chosen directory>/vpn-wrapper-script`.
 
 
 ## Wrapper script - usage
