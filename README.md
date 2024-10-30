@@ -6,7 +6,7 @@ Status: **WIP**
 
 This script provides a browser login through a WebKitGTK2 window. The authentication cookie is printed to the console so that it can be used to call [OpenConnect](https://www.infradead.org/openconnect/) with parameter `--cookie=<AUTH-COOKIE>` afterwards. This allows OpenConnect to be compatible with web-based authentication mechanisms, such as SAML.
 
-In contrast to the original project the browser can run as regular user account. Only `openconnect` has to called with `sudo` as user `root` to be able to add the tunneling network device. If `openconnect` is started with parameter `--setuid=${USER}` it will drop the root privileges to your user account.
+In contrast to the original project the browser can run as regular user account. Only `openconnect` has to called with `sudo` as user `root` to be able to add the tunneling network device. If `openconnect` is started with parameter `--setuid=${USER}` it will drop the root privileges to your user account after the connection has been established.
 
 
 ## Requirements
@@ -37,21 +37,39 @@ Instruction for specific distros can be found below.
 
 ## Installation
 
-This repo can be downloaded with `git clone https://github.com/utknoxville/openconnect-pulse-gui` or via the GitHub webpage.
+**Version A**
 
-copy the `openconnect_pulse_gui.py` script to a directory of your liking.
+This repo can be downloaded with `git clone https://github.com/hardcodes/openconnect-pulse-gui-cookie.git` or via the GitHub webpage.
+
+- Copy the `openconnect_pulse_gui.py` script to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
+
+**Version B**
+
+- Copy (`openconnect_pulse_gui.py`)(https://raw.githubusercontent.com/hardcodes/openconnect-pulse-gui-cookie/refs/heads/master/openconnect_pulse_gui/openconnect_pulse_gui.py) to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
 
 
 ## Usage
 
+Simply call the script with the sign-in link / server URL as only required argument.
 
-**TODO**
+```bash
+python3 openconnect_pulse_gui.py <URL>
+```
 
-Once installed, the `openconnect-pulse-gui` script should be in your $PATH.  If not, the script `openconnect_pulse_gui/openconnect_pulse_gui.py` can be called directly.
+Other arguments can be found by using
 
-The only required required argument is the sign-in link / server URL.  Other arguments can be found by using `python openconnect-pulse-gui.py -h`.
+```bash
+python3 openconnect-pulse-gui.py -h
+```
 
-Note that this script will not run openconnect, it will only print the command with the correct arguments to stdout.
+Note that this script will **not** run openconnect, it will only print the command with the correct arguments to stdout.
+
+If you want to capture the output in a variable before invoking `openconnect`, you can call it this way:
+
+```bash
+SSO_LOGIN_COOKIE=$(python3 openconnect_pulse_gui.py <URL>)
+sudo -p "sudo (openconnect): " openconnect --background --protocol=nc --user=<VPN user account> --setuid=${USER} --cookie="${SSO_LOGIN_COOKIE}" <URL>
+```
 
 
 ## Login process
