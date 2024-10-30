@@ -41,7 +41,7 @@ Instruction for specific distros can be found below.
 
 This repo can be downloaded with `git clone https://github.com/hardcodes/openconnect-pulse-gui-cookie.git` or via the GitHub webpage.
 
-- Copy the `openconnect_pulse_gui.py` script to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
+- Copy the `openconnect_pulse_gui/openconnect_pulse_gui.py` script to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
 
 **Version B**
 
