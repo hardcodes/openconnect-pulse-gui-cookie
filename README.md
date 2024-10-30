@@ -45,7 +45,7 @@ This repo can be downloaded with `git clone https://github.com/hardcodes/opencon
 
 **Version B**
 
-- Copy (`openconnect_pulse_gui.py`)(https://raw.githubusercontent.com/hardcodes/openconnect-pulse-gui-cookie/refs/heads/master/openconnect_pulse_gui/openconnect_pulse_gui.py) to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
+- Copy [`openconnect_pulse_gui.py`](https://raw.githubusercontent.com/hardcodes/openconnect-pulse-gui-cookie/refs/heads/master/openconnect_pulse_gui/openconnect_pulse_gui.py) to a directory of your liking (it should be in your `$PATH` if you want to call it from your shell).
 
 
 ## Usage
@@ -72,7 +72,34 @@ sudo -p "sudo (openconnect): " openconnect --background --protocol=nc --user=<VP
 ```
 
 
-## Login process
+# Wrapper script
+
+You can use the wrapper script `wrapper-script/vpn-wrapper-script` for convenience.
+
+- Copy the file [`vpn-wrapper-script`](https://raw.githubusercontent.com/hardcodes/openconnect-pulse-gui-cookie/refs/heads/master/wrapper-script/vpn-wrapper-script) to a directory of your liking and make sure it's in the `$PATH`.
+- Edit the file and
+  - enter `VPN_USER` if you connect with another user name then your Linux account.
+  - enter `VPN_URL` for your VPN connection,
+  - set the full path for `PULSE_GUI_SCRIPT`.
+
+
+## Wrapper script - usage
+
+Call
+
+```bash
+vpn-wrapper-script
+```
+
+The script will
+
+- start the `openconnect_pulse_gui.py` with the URL you entered in the `VPN_URL` variable and capture the cookie in the variable `SSO_LOGIN_COOKIE`,
+- invoke `openconnect` via `sudo` with the captured cookie for authentication, drop the `root` privileges afterwards and write the process id into the file `PID_FILE`.
+
+When called again, the script will send `SIGINT` to the running `openconnect` process and disconnect.
+
+
+# Login process
 
 Anybody wishing to recreate this functionality either manually or using another library can with the following steps:
 
