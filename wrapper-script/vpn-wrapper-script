@@ -76,7 +76,7 @@ if test -f "${PID_FILE}";then
 	fi
 	if [ -f "${PID_FILE}" ];then
 		echo "removing PID file"
-		try rm "${PID_FILE}"
+		try rm -f "${PID_FILE}"
 	fi
 else
 	SSO_LOGIN_COOKIE=$(python3 ${PULSE_GUI_SCRIPT} ${VPN_URL})
