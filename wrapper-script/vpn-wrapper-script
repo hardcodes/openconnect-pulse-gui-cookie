@@ -58,6 +58,8 @@ VPNC_SCRIPT=""
 if test $(egrep -c '^(ID=ubuntu|ID=pop)' /etc/os-release) = "1" && \
    test ! -z "/usr/share/vpnc-scripts/vpnc-script" ;then
 	VPNC_SCRIPT="--script /usr/share/vpnc-scripts/vpnc-script"
+else
+	VPNC_SCRIPT=""
 fi
 
 if test -f "${PID_FILE}";then
