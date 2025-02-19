@@ -55,7 +55,7 @@ fi
 
 VPNC_SCRIPT=""
 # FreeBSD uses another path and other Linux distributions may not have the script at all.
-if test $(egrep -c '^(ID=ubuntu|ID=pop)' /etc/os-release) = "1" && \
+if test $(grep -c -E '^(ID=ubuntu|ID=pop)' /etc/os-release) = "1" && \
    test ! -z "/usr/share/vpnc-scripts/vpnc-script" ;then
 	VPNC_SCRIPT="--script /usr/share/vpnc-scripts/vpnc-script"
 else
